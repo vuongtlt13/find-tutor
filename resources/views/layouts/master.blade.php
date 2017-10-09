@@ -7,10 +7,11 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
 
-    <link rel="shortcut icon" href="vendor/light/assets/images/favicon_1.ico">
+    <link rel="shortcut icon" href="images/edit.png">
 
-    <title>Ubold - Responsive Admin Dashboard Template</title>
+    <title>Tìm gia sư ôn thi đại học - Tại Hà Nội</title>
 
+    @yield('css')
     <link href="vendor/light/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="vendor/light/assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="vendor/light/assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -26,8 +27,16 @@
     <![endif]-->
 
     <script src="vendor/light/assets/js/modernizr.min.js"></script>
+    <style>
+        login:hover {
+            text-decoration: underline;
+        }
 
-    @yield('css')
+        login:active {
+            text-decoration: underline;
+        }
+    </style>
+
 </head>
 
 <body class="fixed-left">
@@ -56,11 +65,10 @@
 <script src="vendor/light/assets/js/jquery.nicescroll.js"></script>
 <script src="vendor/light/assets/js/jquery.scrollTo.min.js"></script>
 
+@yield('script')
 
 <script src="vendor/light/assets/js/jquery.core.js"></script>
 <script src="vendor/light/assets/js/jquery.app.js"></script>
-
-@yield('script')
 
 </body>
 </html>

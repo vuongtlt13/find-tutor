@@ -1,5 +1,6 @@
 <?php
 
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,5 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+
+        $credentials = [
+            "name" => "VUONG",
+            "username" => "vuong",
+            "email" => "vuongtlt13@gmail.com",
+            "password" => "1",
+        ];
+
+        Sentinel::registerAndActivate($credentials);
     }
 }

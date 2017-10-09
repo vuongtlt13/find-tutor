@@ -9,25 +9,17 @@
 
     var FormWizard = function() {};
 
-    FormWizard.prototype.createBasic = function($form_container) {
-        $form_container.children("div").steps({
-            headerTag: "h3",
-            bodyTag: "section",
-            transitionEffect: "slideLeft",
-            onFinishing: function (event, currentIndex) { 
-                //NOTE: Here you can do form validation and return true or false based on your validation logic
-                console.log("Form has been validated!");
-                return true; 
-            }, 
-            onFinished: function (event, currentIndex) {
-               //NOTE: Submit the form, if all validation passed.
-                console.log("Form can be submitted using submit method. E.g. $('#basic-form').submit()"); 
-                $("#basic-form").submit();
+    function myFunction() {
+        console.log('run my script');
+        //console.log($('#name').val());
+        $('#result-name').text(' ' + $('#name').val() + ' ');
+        $('#result-gender').text(' ' + $('#gender').val() + ' ');
+        $('#result-dob').text(' ' + $('#dob').val() + ' ');
+        $('#result-cmnd').text(' ' + $('#cmnd').val() + ' ');
+        $('#result-phone').text(' ' + $('#phone').val() + ' ');
+        $('#result-address').text(' ' + $('#address').val() + ' ');
+    };
 
-            }
-        });
-        return $form_container;
-    },
     //creates form with validation
     FormWizard.prototype.createValidatorForm = function($form_container) {
         $form_container.validate({
@@ -41,6 +33,7 @@
             transitionEffect: "slideLeft",
             onStepChanging: function (event, currentIndex, newIndex) {
                 $form_container.validate().settings.ignore = ":disabled,:hidden";
+                myFunction();
                 return $form_container.valid();
             },
             onFinishing: function (event, currentIndex) {
@@ -48,33 +41,24 @@
                 return $form_container.valid();
             },
             onFinished: function (event, currentIndex) {
-                alert("Submitted!");
+                $("#wizard-validation-form").submit();
             }
         });
 
         return $form_container;
     },
-    //creates vertical form
-    FormWizard.prototype.createVertical = function($form_container) {
-        $form_container.steps({
-            headerTag: "h3",
-            bodyTag: "section",
-            transitionEffect: "fade",
-            stepsOrientation: "vertical"
-        });
-        return $form_container;
-    },
+
     FormWizard.prototype.init = function() {
         //initialzing various forms
 
         //basic form
-        this.createBasic($("#basic-form"));
+        // this.createBasic($("#basic-form"));
 
         //form with validation
         this.createValidatorForm($("#wizard-validation-form"));
 
         //vertical form
-        this.createVertical($("#wizard-vertical"));
+        // this.createVertical($("#wizard-vertical"));
     },
     //init
     $.FormWizard = new FormWizard, $.FormWizard.Constructor = FormWizard
