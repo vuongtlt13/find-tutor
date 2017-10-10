@@ -26,7 +26,7 @@
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="panel panel-border panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Tìm kiếm gia sư</h3>
+                                <h2 class="panel-title">Tìm kiếm gia sư</h2>
                             </div>
                             <div class="panel-body">
                                 <div class="row text-center">
@@ -37,34 +37,6 @@
                                     <div class="col-sm-2 form-group">
                                         <label>Giới tính</label>
                                         <div class="btn-group bootstrap-select">
-                                            <div class="dropdown-menu open" style="max-height: 756px; overflow: hidden; min-height: 0px;">
-                                                <ul class="dropdown-menu inner" role="menu" style="max-height: 748px; overflow-y: auto; min-height: 0px;">
-                                                    <li data-original-index="0" class="selected">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Tất cả</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="1">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Nam</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="2" class="">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Nữ</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="3">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Khác</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                             <select class="selectpicker" data-style="btn-white" tabindex="-98">
                                                 <option>Tất cả</option>
                                                 <option>Nam</option>
@@ -76,35 +48,8 @@
                                     <div class="col-sm-2">
                                         <label>Môn học</label>
                                         <div class="btn-group bootstrap-select">
-                                            <div class="dropdown-menu open" style="max-height: 756px; overflow: hidden; min-height: 0px;">
-                                                <ul class="dropdown-menu inner" role="menu" style="max-height: 748px; overflow-y: auto; min-height: 0px;">
-                                                    <li data-original-index="0" class="selected">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Môn 1</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="1">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Môn 2</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="2" class="">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Môn 3</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="3">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Môn 4</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                             <select class="selectpicker" data-style="btn-white" tabindex="-98">
+                                                <option>Tất cả</option>
                                                 <option>Môn 1</option>
                                                 <option>Môn 2</option>
                                                 <option>Môn 3</option>
@@ -115,41 +60,48 @@
                                     <div class="col-sm-4">
                                         <label>Nơi dạy</label>
                                         <div class="btn-group bootstrap-select">
-                                            <div class="dropdown-menu open" style="max-height: 756px; overflow: hidden; min-height: 0px;">
-                                                <ul class="dropdown-menu inner" role="menu" style="max-height: 748px; overflow-y: auto; min-height: 0px;">
-                                                    <li data-original-index="0" class="selected">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Quận 1</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="1">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Quận 2</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="2" class="">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Quận 3</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li data-original-index="3">
-                                                        <a tabindex="0" class="" style="" data-tokens="null">
-                                                            <span class="text">Quận 4</span>
-                                                            <span class="glyphicon glyphicon-ok check-mark"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                             <select class="selectpicker" data-style="btn-white" tabindex="-98">
+                                                <option>Tất cả</option>
                                                 <option>Quận 1</option>
                                                 <option>Quận 2</option>
                                                 <option>Quận 3</option>
                                                 <option>Quận 4</option>
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="col-sm-4 form-group">
+                                        <label for="name">Tuổi</label>
+                                        <div class="btn-group bootstrap-select">
+                                            <select class="selectpicker" data-style="btn-white" tabindex="-98">
+                                                <option>Tất cả</option>
+                                                <option><= 25</option>
+                                                <option>26 - 30</option>
+                                                <option>31 - 35</option>
+                                                <option>>= 36</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 form-group">
+                                        <label for="name">Giá cả(1 buổi)</label>
+                                        <div class="btn-group bootstrap-select">
+                                            <select class="selectpicker" data-style="btn-white" tabindex="-98">
+                                                <option>Tất cả</option>
+                                                <option><= 100.000</option>
+                                                <option>100.000 - 180.000</option>
+                                                <option>180.000 - 250.000</option>
+                                                <option>>= 250.000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 form-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn waves-effect waves-light btn-default btn-lg"><i class="fa fa-search m-r-5"></i> Tìm kiếm</button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
