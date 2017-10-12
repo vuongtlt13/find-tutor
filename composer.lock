@@ -661,11 +661,8 @@
                 "framework",
                 "laravel"
             ],
-<<<<<<< HEAD
-            "time": "2017-09-04 14:09:04"
-=======
+
             "time": "2017-09-24 19:09:38"
->>>>>>> 507642ea0878763ee97e4672dd47589003bc6cb5
         },
         {
             "name": "laravel/tinker",
@@ -1041,18 +1038,6 @@
         },
         {
             "name": "paragonie/random_compat",
-<<<<<<< HEAD
-            "version": "v2.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-=======
             "version": "v2.0.11",
             "source": {
                 "type": "git",
@@ -1063,7 +1048,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
->>>>>>> 507642ea0878763ee97e4672dd47589003bc6cb5
                 "shasum": ""
             },
             "require": {
@@ -1098,11 +1082,7 @@
                 "pseudorandom",
                 "random"
             ],
-<<<<<<< HEAD
-            "time": "2017-03-13 16:27:32"
-=======
             "time": "2017-09-27 21:40:39"
->>>>>>> 507642ea0878763ee97e4672dd47589003bc6cb5
         },
         {
             "name": "psr/container",
@@ -1323,18 +1303,6 @@
         },
         {
             "name": "ramsey/uuid",
-<<<<<<< HEAD
-            "version": "3.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
-=======
             "version": "3.7.1",
             "source": {
                 "type": "git",
@@ -1345,7 +1313,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/ramsey/uuid/zipball/45cffe822057a09e05f7bd09ec5fb88eeecd2334",
                 "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334",
->>>>>>> 507642ea0878763ee97e4672dd47589003bc6cb5
                 "shasum": ""
             },
             "require": {
