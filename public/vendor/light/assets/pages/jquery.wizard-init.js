@@ -10,7 +10,7 @@
     var FormWizard = function() {};
 
     function myFunction() {
-        console.log('run my script');
+        // console.log('run my script');
         //console.log($('#name').val());
         $('#result-name').text(' ' + $('#name').val() + ' ');
         $('#result-gender').text(' ' + $('#gender').val() + ' ');
@@ -21,8 +21,7 @@
         $('#result-job').text(' ' + $('#job').val() + ' ');
         $('#result-workplace').text(' ' + $('#workplace').val() + ' ');
         $('#result-school').text(' ' + $('#school').val() + ' ');
-    };
-
+    }
     //creates form with validation
     FormWizard.prototype.createValidatorForm = function($form_container) {
         $form_container.validate({
@@ -44,6 +43,19 @@
                 return $form_container.valid();
             },
             onFinished: function (event, currentIndex) {
+                let isValid = new Promise((resolve, reject) => {
+                    let res = ($("#wizard-validation-form").parsley().validate());
+                    resolve(res);
+                });
+
+                isValid.then((res) => {
+                    console.log('the valid', res === true);
+                    if (res === false) {
+                        alert('Thông tin chưa chính xác, hãy xem lại!');
+                        console.log('Thông tin chưa chính xác, hãy xem lại!');
+                    }
+                });
+
                 $("#wizard-validation-form").submit();
             }
         });

@@ -110,6 +110,60 @@ class MigrationCartalystSentinel extends Migration
 
             $table->engine = 'InnoDB';
         });
+
+        Schema::create('tutors', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->string('job')->nullable();
+            $table->string('workplace')->nullable();
+            $table->boolean('status')->default(0);
+
+            $table->engine = 'InnoDB';
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+
+        Schema::create('admins', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('access_level')->default(1);
+
+            $table->engine = 'InnoDB';
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+
+        Schema::create('students', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->string('school')->nullable();
+
+            $table->engine = 'InnoDB';
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+
+        Schema::create('areas', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+
+            $table->engine = 'InnoDB';
+        });
+
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+
+            $table->engine = 'InnoDB';
+        });
+
+        Schema::create('courses', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('area_id')->unsigned();
+            $table->integer('subject_id')->unsigned();
+            $table->integer('fee')->default(0);
+            $table->boolean('status')->default(0);
+            $table->timestamps();
+
+            $table->engine = 'InnoDB';
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('area_id')->references('id')->on('areas');
+            $table->foreign('subject_id')->references('id')->on('subjects');
+        });
     }
 
     /**
@@ -125,6 +179,12 @@ class MigrationCartalystSentinel extends Migration
         Schema::drop('roles');
         Schema::drop('role_users');
         Schema::drop('throttle');
+        Schema::drop('tutors');
+        Schema::drop('admins');
+        Schema::drop('students');
+        Schema::drop('courses');
         Schema::drop('users');
+        Schema::drop('areas');
+        Schema::drop('subjects');
     }
 }

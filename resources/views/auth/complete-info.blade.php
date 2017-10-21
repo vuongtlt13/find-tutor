@@ -60,7 +60,14 @@
                                         <div class="form-group clearfix">
                                             <label class="col-lg-2 control-label" for="cmnd"> CMND *</label>
                                             <div class="col-lg-10">
-                                                <input id="cmnd" name="cmnd" type="text" class="required form-control">
+                                                <input data-parsley-type="digits" data-parsley-id="45" id="cmnd" name="cmnd" type="text" class="required form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group clearfix">
+                                            <label class="col-lg-2 control-label">Digits</label>
+                                            <div class="col-lg-10">
+                                                <input data-parsley-type="digits" type="text" class="form-control" required="" placeholder="Enter only digits">
                                             </div>
                                         </div>
 
@@ -81,7 +88,7 @@
                                     </section>
                                     <h3>Bước 2: Điền thông tin thêm</h3>
                                     <section>
-                                        @if ($type == 0)
+                                        @if ($type == 1)
                                             <div class="form-group clearfix">
                                                 <label class="col-lg-2 control-label" for="job"> Công việc chính</label>
                                                 <div class="col-lg-10">
@@ -94,7 +101,7 @@
                                                     <input id="workplace" name="workplace" type="text" class="required form-control">
                                                 </div>
                                             </div>
-                                        @elseif ($type == 1)
+                                        @elseif ($type == 0)
                                             <div class="form-group clearfix">
                                                 <label class="col-lg-2 control-label" for="school"> Trường</label>
                                                 <div class="col-lg-10">
@@ -114,10 +121,10 @@
                                                     <li><b>CMND :</b> <span id="result-cmnd"> </span></li>
                                                     <li><b>Số điện thoại :</b> <span id="result-phone"> </span></li>
                                                     <li><b>Địa chỉ :</b> <span id="result-address"> </span></li>
-                                                    @if ($type == 0)
+                                                    @if ($type == 1)
                                                         <li><b>Công việc :</b><span id="result-job"> </span></li>
                                                         <li><b>Cơ quan :</b> <span id="result-workplace"> </span></li>
-                                                    @elseif ($type == 1)
+                                                    @elseif ($type == 0)
                                                         <li><b>Trường : </b><span id="result-school"> </span></li>
                                                     @endif
                                                 </ul>
@@ -149,4 +156,12 @@
     <script src="vendor/light/assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
     <script src="vendor/light/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 
+    <script type="text/javascript" src="vendor/light/assets/plugins/parsleyjs/parsley.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('form').parsley();
+        });
+    </script>
 @endsection

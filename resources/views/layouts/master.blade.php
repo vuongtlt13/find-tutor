@@ -69,6 +69,5 @@
 
 <script src="vendor/light/assets/js/jquery.core.js"></script>
 <script src="vendor/light/assets/js/jquery.app.js"></script>
-
 </body>
 </html>
