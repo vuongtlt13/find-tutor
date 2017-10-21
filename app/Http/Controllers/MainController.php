@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Tutor;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class MainController extends Controller
 {
     /**
+     * Enter login page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function login() {
@@ -24,6 +26,7 @@ class MainController extends Controller
     }
 
     /**
+     * Enter page to find tutor
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function findTutor()
@@ -32,6 +35,7 @@ class MainController extends Controller
     }
 
     /**
+     * enter register page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function register()
@@ -40,6 +44,10 @@ class MainController extends Controller
         return view('auth.register');
     }
 
+    /**
+     * Enter complete profile
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function completeInfo()
     {
 
@@ -47,11 +55,31 @@ class MainController extends Controller
         if ($user === null) echo "WRONG";
         else {
             if ($user->hasAccess(['user.completeInfo'])) {
-                return view('auth.complete-info');
+                $type = $this->getTypeOfUser($user);
+                return view('auth.complete-info', ['type' => $type]);
             } else {
                 echo "No permission";
             }
         }
 
+    }
+
+    /**
+     * Enter manage page (Only tutor)
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function manage()
+    {
+        $user = Sentinel::getUser();
+        $tutor = Tutor::where('user_id', $user->id)->first();
+        if ($tutor == null) {
+            echo "No permission";
+        } else {
+            if ($tutor->status == 0) {
+                echo "No permission, please contact to admin";
+            } else {
+                return view('tutor.manage');
+            }
+        }
     }
 }

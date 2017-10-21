@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AdminTable extends Migration
+class StudentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AdminTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->integer('access_level')->default(1);
+            $table->string('school')->nullable();
 
             $table->engine = 'InnoDB';
             $table->foreign('user_id')->references('id')->on('users');
@@ -29,6 +29,6 @@ class AdminTable extends Migration
      */
     public function down()
     {
-        Schema::drop('admins');
+        Schema::drop('students');
     }
 }

@@ -27,11 +27,11 @@
                                 <img src="vendor/light/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle">
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Profile</a></li>
-                                <li><a href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i> Settings</a></li>
+                                <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Hồ sơ</a></li>
+                                {{--<li><a href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i> Settings</a></li>--}}
                                 {{--<li><a href="javascript:void(0)"><i class="ti-lock m-r-10 text-custom"></i> Lock screen</a></li>--}}
                                 <li class="divider"></li>
-                                <li><a href="{{route('logout')}}"><i class="ti-power-off m-r-10 text-danger"></i> Logout</a></li>
+                                <li><a href="{{route('logout')}}"><i class="ti-power-off m-r-10 text-danger"></i> Đăng xuất </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -39,8 +39,8 @@
             @else
                 <div class="">
                     <ul class="nav navbar-nav navbar-right pull-right hidden-xs">
-                        <li><a href="{{route('register')}}" class="waves-effect waves-light"> <login>Sign Up </login> </a></li>
-                        <li><a href="{{route('login')}}" class="waves-effect waves-light"> <login>Login</login></a></li>
+                        <li><a href="{{route('register')}}" class="waves-effect waves-light"> <login>Đăng ký </login> </a></li>
+                        <li><a href="{{route('login')}}" class="waves-effect waves-light"> <login>Đăng nhập </login></a></li>
                     </ul>
                 </div>
             @endif

@@ -13,11 +13,11 @@
         <div id="sidebar-menu">
             <ul>
                 <li class="has_sub">
-                    <a href="{{route('index')}}" class="waves-effect"><i class="ti-home"></i> <span> Home </span></a>
+                    <a href="{{route('index')}}" class="waves-effect"><i class="ti-home"></i> <span> Trang chủ </span></a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="{{route('find-tutor')}}" class="waves-effect"><i class="ti-paint-bucket"></i> <span> Tìm gia sư </span>
+                    <a href="{{route('find-tutor')}}" class="waves-effect"><i class="ti-search"></i> <span> Tìm gia sư </span>
                         {{--<span class="menu-arrow"></span> --}}
                     </a>
                     {{--<ul class="">--}}
@@ -28,8 +28,14 @@
                         {{--<li><a href="/findbycounty">Theo quận</a></li>--}}
                     {{--</ul>--}}
                 </li>
+                @if(Controller::getTypeOfUser(Sentinel::getUser()) >= 1)
+                <li class="text-muted menu-title">Cài đặt</li>
+                <li class="has_sub">
+                    <a href="{{route('manage')}}" class="waves-effect"><i class="ti-settings"></i> <span> Quản lý dạy học </span>
+                    </a>
+                </li>
+                @endif
             </ul>
-            <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
     </div>

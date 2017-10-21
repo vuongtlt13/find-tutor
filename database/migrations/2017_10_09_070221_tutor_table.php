@@ -15,8 +15,8 @@ class TutorTable extends Migration
     {
         Schema::create('tutors', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->string('job');
-            $table->string('workplace');
+            $table->string('job')->nullable();
+            $table->string('workplace')->nullable();
             $table->boolean('status')->default(0);
 
             $table->engine = 'InnoDB';

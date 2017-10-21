@@ -18,6 +18,9 @@
         $('#result-cmnd').text(' ' + $('#cmnd').val() + ' ');
         $('#result-phone').text(' ' + $('#phone').val() + ' ');
         $('#result-address').text(' ' + $('#address').val() + ' ');
+        $('#result-job').text(' ' + $('#job').val() + ' ');
+        $('#result-workplace').text(' ' + $('#workplace').val() + ' ');
+        $('#result-school').text(' ' + $('#school').val() + ' ');
     };
 
     //creates form with validation

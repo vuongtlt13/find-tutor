@@ -25,10 +25,10 @@
                                 Bạn phải điền đầy đủ thông tin để được hệ thống xác nhận, đặc biệt các thông tin có dấu (*)
                             </p>
 
-                            <form id="wizard-validation-form" method="post" action="/complete">
+                            <form id="wizard-validation-form" method="post" action="{{route('complete-info')}}">
                                 {{csrf_field()}}
                                 <div>
-                                    <h3>Bước 1: Điền thông tin</h3>
+                                    <h3>Bước 1: Điền thông tin cơ bản</h3>
                                     <section>
 
                                         <div class="form-group clearfix">
@@ -79,7 +79,31 @@
                                         </div>
 
                                     </section>
-                                    <h3>Bước 2: Xác nhận</h3>
+                                    <h3>Bước 2: Điền thông tin thêm</h3>
+                                    <section>
+                                        @if ($type == 0)
+                                            <div class="form-group clearfix">
+                                                <label class="col-lg-2 control-label" for="job"> Công việc chính</label>
+                                                <div class="col-lg-10">
+                                                    <input id="job" name="job" type="text" class="required form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix">
+                                                <label class="col-lg-2 control-label" for="workplace"> Cơ quan</label>
+                                                <div class="col-lg-10">
+                                                    <input id="workplace" name="workplace" type="text" class="required form-control">
+                                                </div>
+                                            </div>
+                                        @elseif ($type == 1)
+                                            <div class="form-group clearfix">
+                                                <label class="col-lg-2 control-label" for="school"> Trường</label>
+                                                <div class="col-lg-10">
+                                                    <input id="school" name="school" type="text" class="required form-control">
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </section>
+                                    <h3>Bước 3: Xác nhận</h3>
                                     <section>
                                         <div class="form-group clearfix">
                                             <div class="col-lg-12">
@@ -90,6 +114,12 @@
                                                     <li><b>CMND :</b> <span id="result-cmnd"> </span></li>
                                                     <li><b>Số điện thoại :</b> <span id="result-phone"> </span></li>
                                                     <li><b>Địa chỉ :</b> <span id="result-address"> </span></li>
+                                                    @if ($type == 0)
+                                                        <li><b>Công việc :</b><span id="result-job"> </span></li>
+                                                        <li><b>Cơ quan :</b> <span id="result-workplace"> </span></li>
+                                                    @elseif ($type == 1)
+                                                        <li><b>Trường : </b><span id="result-school"> </span></li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </div>

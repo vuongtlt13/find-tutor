@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Tutor extends Model
+class Subject extends Model
 {
     use Notifiable;
 
@@ -15,12 +15,6 @@ class Tutor extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'job',
-        'workplace',
+        'name',
     ];
-
-    public $timestamps = false;
-
-    protected $primaryKey = 'user_id';
 }

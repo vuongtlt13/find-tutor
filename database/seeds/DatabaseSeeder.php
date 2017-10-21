@@ -1,6 +1,9 @@
 <?php
 
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AreaController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TutorController;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,13 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 
-        $credentials = [
-            "name" => "VUONG",
-            "username" => "vuong",
-            "email" => "vuongtlt13@gmail.com",
-            "password" => "1",
-        ];
+        AdminController::createAdmin("VUONG", "vuong", "vuongtlt13@gmail.com", "1");
 
-        Sentinel::registerAndActivate($credentials);
+        AreaController::createArea('Quận Ba Đình');
+
+        SubjectController::createSubject('Toán');
+
+//        TutorController::createTutor('username', 'name', 'date_of_birth', 'address', status);
     }
 }
