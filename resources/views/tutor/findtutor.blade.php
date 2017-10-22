@@ -50,10 +50,9 @@
                                         <div class="btn-group bootstrap-select">
                                             <select id="subject" class="selectpicker" data-style="btn-white" tabindex="-98">
                                                 <option>Tất cả</option>
-                                                <option>Môn 1</option>
-                                                <option>Môn 2</option>
-                                                <option>Môn 3</option>
-                                                <option>Môn 4</option>
+                                                @foreach($subjects as $subject)
+                                                    <option>{{$subject->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -62,10 +61,9 @@
                                         <div class="btn-group bootstrap-select">
                                             <select id="area" class="selectpicker" data-style="btn-white" tabindex="-98">
                                                 <option>Tất cả</option>
-                                                <option>Quận 1</option>
-                                                <option>Quận 2</option>
-                                                <option>Quận 3</option>
-                                                <option>Quận 4</option>
+                                                @foreach($areas as $area)
+                                                    <option>{{$area->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -131,6 +129,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($courses as $course)
+                                    <tr>
+                                        <td>{{$course->user_id}}</td>
+                                        <td>{{$course->user_id}}</td>
+                                        <td>{{$course->user_id}}</td>
+                                        <td>{{$course->subject_id}}</td>
+                                        <td>{{$course->area_id}}</td>
+                                        <td>{{$course->fee}} VNĐ</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

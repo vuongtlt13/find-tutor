@@ -37,10 +37,9 @@
                                         <div class="btn-group bootstrap-select">
                                             <select id="subject" class="selectpicker" data-style="btn-white" tabindex="-98">
                                                 <option>Tất cả</option>
-                                                <option>Môn 1</option>
-                                                <option>Môn 2</option>
-                                                <option>Môn 3</option>
-                                                <option>Môn 4</option>
+                                                @foreach($subjects as $subject)
+                                                    <option>{{$subject->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -49,10 +48,9 @@
                                         <div class="btn-group bootstrap-select">
                                             <select id="area" class="selectpicker" data-style="btn-white" tabindex="-98">
                                                 <option>Tất cả</option>
-                                                <option>Quận 1</option>
-                                                <option>Quận 2</option>
-                                                <option>Quận 3</option>
-                                                <option>Quận 4</option>
+                                                @foreach($areas as $area)
+                                                    <option>{{$area->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -80,12 +78,21 @@
                                 <tr>
                                     <th>Môn dạy</th>
                                     <th>Khu vực</th>
-                                    <th>Giá</th>
+                                    <th>Giá(1 buổi)</th>
+                                    <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($courses as $course)
+                                        <tr>
+                                            <td>{{$course->subject_id}}</td>
+                                            <td>{{$course->area_id}}</td>
+                                            <td>{{$course->fee}} VNĐ</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -99,61 +106,61 @@
     <!-- ============================================================== -->
 
     <!-- Modal -->
+
     <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Thêm môn học</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Môn học</label>
-                            <div class="btn-group bootstrap-select">
-                                <select id="subject" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                    <option>Tất cả</option>
-                                    <option>Môn 1</option>
-                                    <option>Môn 2</option>
-                                    <option>Môn 3</option>
-                                    <option>Môn 4</option>
-                                </select>
+                <form method="post" action="manage/create">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Thêm môn học</h4>
+                        {{csrf_field()}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Môn học</label>
+                                <div class="btn-group bootstrap-select">
+                                    <select id="subject" name="subject" class="selectpicker" data-style="btn-white" tabindex="-98">
+                                        @foreach($subjects as $subject)
+                                        <option>{{$subject->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Nơi dạy</label>
+                                <div class="btn-group bootstrap-select">
+                                    <select id="area" name="area"class="selectpicker" data-style="btn-white" tabindex="-98">
+                                        @foreach($areas as $area)
+                                            <option>{{$area->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label>Nơi dạy</label>
-                            <div class="btn-group bootstrap-select">
-                                <select id="area" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                    <option>Tất cả</option>
-                                    <option>Quận 1</option>
-                                    <option>Quận 2</option>
-                                    <option>Quận 3</option>
-                                    <option>Quận 4</option>
-                                </select>
+                        <div class="row m-t-10">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="price" class="control-label">Học phí</label>
+                                    <input type="number" name="fee" class="form-control" id="fee" placeholder="Giá cả">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-10">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="active" class="control-label m-r-15">Nhận dạy: </label>
+                                    <input id="active" data-on-text="Yes" data-off-text="No" type="checkbox" name="active" data-plugin="switchery" data-color="#0ab310" data-secondary-color="#ed0109" data-switchery="true" style="display: none;">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row m-t-10">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="price" class="control-label">Học phí</label>
-                                <input type="number" class="form-control" id="price" name="price" placeholder="Giá cả">
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info waves-effect waves-light">Thêm</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
                     </div>
-                    <div class="row m-t-10">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="price" class="control-label m-r-15">Nhận dạy: </label>
-                                <input type="checkbox" data-plugin="switchery" data-color="#0ab310" data-secondary-color="#ed0109" data-switchery="true" style="display: none;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info waves-effect waves-light">Thêm</button>
-                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Hủy</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
+use App\Course;
 use App\Student;
+use App\Subject;
 use App\Tutor;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Sentinel;
@@ -127,4 +130,38 @@ class UserController extends Controller
         }
         return redirect(route('index'));
     }
+
+    /**
+     * create new course
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function createCourse(Request $request)
+    {
+        //dd($request);
+        $subject = $request->input('subject');
+        $area = $request->input('area');
+        $fee = $request->input('fee');
+        $isActive = ($request->input('active') == null) ? 0 : 1;
+
+        $user = Sentinel::getUser();
+        $subject = Subject::where('name', $subject)->first();
+        $area = Area::where('name', $area)->first();
+        $fee = (int)$fee;
+
+
+        if (!($subject == null || $area == null || gettype($fee) != 'integer')) {
+            $course = new Course();
+            $course->subject_id = $subject->id;
+            $course->area_id = $area->id;
+            $course->user_id = $user->id;
+            $course->fee = $fee;
+            $course->status = $isActive;
+
+            $course->save();
+        }
+//        dd($subject, $area, gettype($fee), $isActive);
+        return redirect(route('manage'));
+    }
 }
+

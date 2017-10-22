@@ -1,5 +1,5 @@
 function makeUrl() {
-    let res = "/search";
+    let res = "/search?";
     /** GET SUBJECT */
     let subject = $('#subject').val().trim() === "Tất cả" ? "all" : $('#subject').val().trim();
     console.log('subject : ', subject);
@@ -9,6 +9,13 @@ function makeUrl() {
     console.log('area : ', area);
 
     console.log('\n\n');
+
+    subject = 'subject=' + subject;
+    area = 'area=' + area;
+
+    res += createQuery([subject, area]);
+    console.log(res);
+    return res;
 }
 
 $(document).ready(function () {
@@ -36,6 +43,5 @@ $(document).ready(function () {
         console.log("Tim kiem");
 
         let url = makeUrl();
-
-    })
+    });
 });

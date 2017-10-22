@@ -65,13 +65,6 @@
                                         </div>
 
                                         <div class="form-group clearfix">
-                                            <label class="col-lg-2 control-label">Digits</label>
-                                            <div class="col-lg-10">
-                                                <input data-parsley-type="digits" type="text" class="form-control" required="" placeholder="Enter only digits">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group clearfix">
                                             <label class="col-lg-2 control-label" for="phone"> Số điện thoại *</label>
                                             <div class="col-lg-10">
                                                 <input id="phone" name="phone" type="text" class="required form-control">

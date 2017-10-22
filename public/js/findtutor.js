@@ -22,8 +22,17 @@ function getMaxAge(ages) {
     return parseInt(stringArray[2]);
 }
 
+function createQuery(params) {
+    let res = "";
+    params.forEach((query) => {
+        if (res === "") res += query;
+        else res += '&' + query;
+    });
+    return res;
+}
+
 function makeUrl() {
-    let res = "/search";
+    let res = "/search?";
     /** GET NAME */
     let name = $('#name').val().trim() === "" ? "all" : $('#name').val().trim();
     console.log('name : ', name);
@@ -55,6 +64,18 @@ function makeUrl() {
     console.log('maxPrice : ', maxPrice);
 
     console.log('\n\n');
+    name = 'name=' + name;
+    gender = 'gender=' + gender;
+    subject = 'subject=' + subject;
+    area = 'area=' + area;
+    minAge = 'minage=' + minAge;
+    maxAge = 'maxage=' + maxAge;
+    minPrice = 'minprice=' + minPrice;
+    maxPrice = 'maxprice=' + maxPrice;
+
+    res += createQuery([name, gender, subject, area, minAge, maxAge, minPrice, maxPrice]);
+    console.log(res);
+    return res;
 }
 
 $(document).ready(function () {

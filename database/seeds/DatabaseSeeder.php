@@ -19,9 +19,18 @@ class DatabaseSeeder extends Seeder
 
         AdminController::createAdmin("VUONG", "vuong", "vuongtlt13@gmail.com", "1");
 
-        //AreaController::createArea('Quận Ba Đình');
+        AreaController::createArea('Quận 1');
+        AreaController::createArea('Quận 2');
+        AreaController::createArea('Quận 3');
+        AreaController::createArea('Quận 4');
+        AreaController::createArea('Quận 5');
 
-        //SubjectController::createSubject('Toán');
+        SubjectController::createSubject('Môn 1');
+        SubjectController::createSubject('Môn 2');
+        SubjectController::createSubject('Môn 3');
+        SubjectController::createSubject('Môn 4');
+        SubjectController::createSubject('Môn 5');
+        SubjectController::createSubject('Môn 6');
 
 //        TutorController::createTutor('username', 'name', 'date_of_birth', 'address', status);
     }

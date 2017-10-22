@@ -27,6 +27,7 @@ Route::middleware(['auth.sentinel'])->group(function () {
     Route::post('/complete', 'UserController@completeInfo')->name('complete-info');
 
     Route::get('/manage', 'MainController@manage')->name('manage');
+    Route::post('/manage/create', 'UserController@createCourse')->name('add-course');
 
     Route::get('/logout', 'UserController@logout')->name('logout');
     Route::get('/profile', 'UserController@profile')->name('profile');

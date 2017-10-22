@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
+use App\Course;
+use App\Subject;
 use App\Tutor;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
@@ -31,7 +34,10 @@ class MainController extends Controller
      */
     public function findTutor()
     {
-        return view('tutor.findtutor');
+        $areas = Area::all();
+        $subjects = Subject::all();
+        $courses = Course::all();
+        return view('tutor.findtutor', ['areas' => $areas, 'subjects' => $subjects, 'courses' => $courses]);
     }
 
     /**
@@ -61,7 +67,6 @@ class MainController extends Controller
                 echo "No permission";
             }
         }
-
     }
 
     /**
@@ -78,7 +83,10 @@ class MainController extends Controller
             if ($tutor->status == 0) {
                 echo "No permission, please contact to admin";
             } else {
-                return view('tutor.manage');
+                $areas = Area::all();
+                $subjects = Subject::all();
+                $courses = Course::where('user_id', $user->id)->get();
+                return view('tutor.manage', ['areas' => $areas, 'subjects' => $subjects, 'courses' => $courses]);
             }
         }
     }

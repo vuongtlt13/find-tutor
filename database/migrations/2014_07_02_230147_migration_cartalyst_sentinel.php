@@ -163,6 +163,7 @@ class MigrationCartalystSentinel extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->unique(array('user_id', 'area_id', 'subject_id'));
         });
     }
 
