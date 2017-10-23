@@ -163,5 +163,11 @@ class UserController extends Controller
 //        dd($subject, $area, gettype($fee), $isActive);
         return redirect(route('manage'));
     }
+
+    public function search(Request $request)
+    {
+        $courses = Course::all();
+        return json_encode($courses);
+    }
 }
 

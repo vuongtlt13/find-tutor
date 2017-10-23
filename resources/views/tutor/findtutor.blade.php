@@ -125,20 +125,20 @@
                                     <th>Giới tính</th>
                                     <th>Môn dạy</th>
                                     <th>Khu vực</th>
-                                    <th>Giá</th>
+                                    <th>Học phí(1 buổi)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($courses as $course)
-                                    <tr>
-                                        <td>{{$course->user_id}}</td>
-                                        <td>{{$course->user_id}}</td>
-                                        <td>{{$course->user_id}}</td>
-                                        <td>{{$course->subject_id}}</td>
-                                        <td>{{$course->area_id}}</td>
-                                        <td>{{$course->fee}} VNĐ</td>
-                                    </tr>
-                                @endforeach
+                                {{--@foreach($courses as $course)--}}
+                                    {{--<tr>--}}
+                                        {{--<td>{{$course->user_id}}</td>--}}
+                                        {{--<td>{{$course->user_id}}</td>--}}
+                                        {{--<td>{{$course->user_id}}</td>--}}
+                                        {{--<td>{{$course->subject_id}}</td>--}}
+                                        {{--<td>{{$course->area_id}}</td>--}}
+                                        {{--<td>{{$course->fee}} VNĐ</td>--}}
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

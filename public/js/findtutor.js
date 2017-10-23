@@ -80,22 +80,43 @@ function makeUrl() {
 
 $(document).ready(function () {
     let table = $('#datatable').dataTable({
-        "pageLength": 15,
-        "searching": false,
-        "lengthChange": false,
-        "language":{
-            "emptyTable":     "Không có dữ liệu trong bảng",
-            "info":           "Đang xem từ _START_ đến _END_ trong tổng số _TOTAL_",
-            "infoEmpty":      "",
-            "loadingRecords": "Đang tải...",
-            "processing":     "Đang tiến hành...",
-            "paginate": {
-                "first":      "Trang đầu",
-                "last":       "Trang cuối",
-                "next":       "Sau",
-                "previous":   "Trước"
+        pageLength: 15,
+        searching: false,
+        lengthChange: false,
+        language:{
+            emptyTable:     "Không có dữ liệu trong bảng",
+            info:           "Đang xem từ _START_ đến _END_ trong tổng số _TOTAL_",
+            infoEmpty:      "",
+            loadingRecords: "Đang tải...",
+            processing:     "Đang lấy thông tin từ server...",
+            paginate: {
+                first:      "Trang đầu",
+                last:       "Trang cuối",
+                next:       "Sau",
+                previous:   "Trước"
             }
         },
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: makeUrl(),
+            dataType : "json",
+            error: function (err) {
+                console.log(makeUrl());
+                console.log('Loi r', err);
+            },
+            success: function (data) {
+              console.log(data);
+            }
+        },
+        columns: [
+            { data: "name", name: 'course.name' },
+            { data: "age" },
+            { data: "gender"},
+            { data: "subject_id"},
+            { data: "area_id" },
+            { data: "fee" }
+        ]
     });
 
     $('#btnSearch').on('click', function (e) {
@@ -104,5 +125,6 @@ $(document).ready(function () {
 
         let url = makeUrl();
 
+        console.log(typeof table.ajaxSettings.url);
     })
 });
