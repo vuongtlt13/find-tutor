@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ae2a4867c6031974cc43babade94cb50",
-    "content-hash": "838f12602a8ca71301cac96043482be5",
+    "hash": "923995a5a6a4cfcbd16c9166a17066b8",
+    "content-hash": "240a26d9a0c0b17a6b10b40377106c3f",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -661,8 +661,7 @@
                 "framework",
                 "laravel"
             ],
-
-            "time": "2017-09-24 19:09:38"
+            "time": "2017-09-04 14:09:04"
         },
         {
             "name": "laravel/tinker",
@@ -2281,6 +2280,76 @@
                 "environment"
             ],
             "time": "2016-09-01 10:05:43"
+        },
+        {
+            "name": "yajra/laravel-datatables-oracle",
+            "version": "v8.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yajra/laravel-datatables.git",
+                "reference": "70ea9184e00cc2e09a9c8772858c5fe04338b3fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/70ea9184e00cc2e09a9c8772858c5fe04338b3fc",
+                "reference": "70ea9184e00cc2e09a9c8772858c5fe04338b3fc",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.4.*|5.5.*",
+                "illuminate/filesystem": "5.4.*|5.5.*",
+                "illuminate/http": "5.4.*|5.5.*",
+                "illuminate/support": "5.4.*|5.5.*",
+                "illuminate/view": "5.4.*|5.5.*",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5"
+            },
+            "suggest": {
+                "yajra/laravel-datatables-buttons": "Plugin for server-side exporting of dataTable.",
+                "yajra/laravel-datatables-fractal": "Plugin for server-side response using Fractal.",
+                "yajra/laravel-datatables-html": "Plugin for server-side HTML builder of dataTable."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Yajra\\DataTables\\DataTablesServiceProvider"
+                    ],
+                    "aliases": {
+                        "DataTables": "Yajra\\DataTables\\Facades\\DataTables"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Yajra\\DataTables\\": "src/"
+                },
+                "files": [
+                    "src/helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arjay Angeles",
+                    "email": "aqangeles@gmail.com"
+                }
+            ],
+            "description": "jQuery DataTables API for Laravel 4|5",
+            "keywords": [
+                "datatables",
+                "jquery",
+                "laravel"
+            ],
+            "time": "2017-10-17 03:09:05"
         }
     ],
     "packages-dev": [

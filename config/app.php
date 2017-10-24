@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
     ],
 
     /*
@@ -229,6 +230,7 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Controller' => \App\Http\Controllers\Controller::class,
+//        'DataTables' => Yajra\DataTables\Facades\DataTables::class
     ],
 
 ];

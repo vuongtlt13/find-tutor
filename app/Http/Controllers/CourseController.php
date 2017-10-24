@@ -18,7 +18,7 @@ class CourseController extends Controller
     public static function createCourses($number)
     {
         for($i = 0; $i < $number; $i++) {
-            $user_id = random_int(1, sizeof(User::all()));
+            $user_id = random_int(2, sizeof(User::all()));
             $subject_id = random_int(1, sizeof(Subject::all()));
             $area_id = random_int(1, sizeof(Area::all()));
             $fee = random_int(0, 500000);

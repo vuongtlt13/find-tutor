@@ -7,8 +7,8 @@
  */
 return [
     "gender" => [
-        "Nam" => 0,
-        "Nữ" => 1,
+        "Nữ" => 0,
+        "Nam" => 1,
         "Khác" => 2,
     ],
     "typeUser" => [

@@ -8,8 +8,10 @@ use App\Student;
 use App\Subject;
 use App\Tutor;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Illuminate\Support\Facades\DB;
 use Sentinel;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -160,14 +162,66 @@ class UserController extends Controller
 
             $course->save();
         }
-//        dd($subject, $area, gettype($fee), $isActive);
         return redirect(route('manage'));
     }
 
     public function search(Request $request)
     {
-        $courses = Course::all();
-        return json_encode($courses);
+        $name = $request->input('name') === 'all' ? '' : $request->input('name');
+        $gender = $request->input('gender') === 'all' ? 3 : config('constants.gender' . $request->input('gender'));
+        if ($gender == 2) $gender = 3;
+        $subject = $request->input('subject') === 'all' ? '' : $request->input('subject');
+        $area = $request->input('area') === 'all' ? '' : $request->input('area');
+        $minAge = intval($request->input('minage'));
+        $maxAge = intval($request->input('maxage'));
+        $minPrice = intval($request->input('minprice'));
+        $maxPrice = intval($request->input('maxprice'));
+
+//        echo $name . ' ' . PHP_EOL;
+//        echo $gender . ' ' . PHP_EOL;
+//        echo $subject . ' ' . PHP_EOL;
+//        echo $area . ' ' . PHP_EOL;
+//        echo gettype($minAge) . ' ' . $minAge . PHP_EOL;
+//        echo gettype($maxAge) . ' ' . $maxAge . PHP_EOL;
+//        echo gettype($minPrice) . ' ' . $minPrice . PHP_EOL;
+//        echo gettype($maxPrice) . ' ' . $maxPrice . PHP_EOL;
+
+//        SELECT c.user_id, c.subject_id, c.area_id, u.name as name, FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age, IF(u.gender = 1, "Nam", "Nữ") as gender, s.name as subject, a.name as area, fee
+//        FROM courses as c
+//        LEFT JOIN users as u
+//          ON c.user_id = u.id
+//        LEFT JOIN subjects as s
+//          ON c.subject_id = s.id
+//        LEFT JOIN areas as a
+//          ON c.area_id = a.id
+//        WHERE u.name LIKE '%%'
+//            AND a.name LIKE '%%'
+//            AND s.name LIKE '%%'
+//            AND gender BETWEEN 0 AND 1
+//            AND FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) BETWEEN 0 AND 100
+//            AND fee BETWEEN 0 AND 1000000
+//        ORDER BY c.user_id;
+
+
+        $query = DB::table('courses as c')
+            ->leftJoin('users as u', 'c.user_id', '=', 'u.id')
+            ->leftJoin('subjects as s', 'c.subject_id', '=', 's.id')
+            ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
+            ->select('c.user_id', 'c.subject_id', 'c.area_id', 'u.name as name',
+                DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
+                DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'),
+                's.name as subject', 'a.name as area', 'fee')
+            ->where([
+                ['u.name', 'like', '%' . $name . '%'],
+                ['a.name', 'like', '%' . $area . '%'],
+                ['s.name', 'like', '%' . $subject . '%'],
+            ])
+            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
+            ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge])
+            ->whereBetween('fee', [$minPrice, $maxPrice]);
+
+//        return json_encode($query->get());
+        return Datatables::of($query)->make(true);
     }
 }
 

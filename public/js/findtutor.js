@@ -35,35 +35,35 @@ function makeUrl() {
     let res = "/search?";
     /** GET NAME */
     let name = $('#name').val().trim() === "" ? "all" : $('#name').val().trim();
-    console.log('name : ', name);
+    // console.log('name : ', name);
 
     /** GET GENDER */
     let gender = $('#gender').val().trim() === "Tất cả" ? "all" : $('#gender').val().trim();
-    console.log('gender : ', gender);
+    // console.log('gender : ', gender);
 
     /** GET SUBJECT */
     let subject = $('#subject').val().trim() === "Tất cả" ? "all" : $('#subject').val().trim();
-    console.log('subject : ', subject);
+    // console.log('subject : ', subject);
 
     /** GET AREA */
     let area = $('#area').val().trim() === "Tất cả" ? "all" : $('#area').val().trim();
-    console.log('area : ', area);
+    // console.log('area : ', area);
 
     /** GET MIN AGE AND MAX AGE */
     let ages = $('#age').val().trim();
 
     let minAge = getMinAge(ages);
-    console.log('Min age : ', minAge);
+    // console.log('Min age : ', minAge);
     let maxAge = getMaxAge(ages);
-    console.log('Max age : ', maxAge);
+    // console.log('Max age : ', maxAge);
 
     /** GET MIN PRICE AND MAX PRICE */
     let minPrice = parseInt($('#minPrice').val().trim()) || 0;
-    console.log('minPrice : ', minPrice);
+    // console.log('minPrice : ', minPrice);
     let maxPrice = parseInt($('#maxPrice').val().trim()) || 10000000;
-    console.log('maxPrice : ', maxPrice);
+    // console.log('maxPrice : ', maxPrice);
 
-    console.log('\n\n');
+    // console.log('\n\n');
     name = 'name=' + name;
     gender = 'gender=' + gender;
     subject = 'subject=' + subject;
@@ -74,12 +74,41 @@ function makeUrl() {
     maxPrice = 'maxprice=' + maxPrice;
 
     res += createQuery([name, gender, subject, area, minAge, maxAge, minPrice, maxPrice]);
-    console.log(res);
+    console.log('URL :', res);
     return res;
 }
 
 $(document).ready(function () {
-    let table = $('#datatable').dataTable({
+    let table = $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: makeUrl(),
+            error: function (err) {
+                console.log(makeUrl());
+                console.log('Loi r', err);
+            },
+        },
+        columnDefs :[
+            {
+                "targets": 2,
+                "data" : function ( row, type, val, meta ) {
+                    console.log('Row: ', row);
+                    console.log('Type: ', type);
+                    console.log('Val: ', val);
+                    console.log('Meta: ', meta);
+                    return val === 1 ? "Nam" : "Nữ";
+                }
+            },
+        ],
+        columns: [
+            { data: "name", name: "name"},
+            { data: "age", name: "age"},
+            { data: "gender", name: "gender"},
+            { data: "subject", name: "subject"},
+            { data: "area", name: "area"},
+            { data: "fee", name: "fee"},
+        ],
         pageLength: 15,
         searching: false,
         lengthChange: false,
@@ -96,35 +125,12 @@ $(document).ready(function () {
                 previous:   "Trước"
             }
         },
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: makeUrl(),
-            dataType : "json",
-            error: function (err) {
-                console.log(makeUrl());
-                console.log('Loi r', err);
-            },
-            success: function (data) {
-              console.log(data);
-            }
-        },
-        columns: [
-            { data: "name", name: 'course.name' },
-            { data: "age" },
-            { data: "gender"},
-            { data: "subject_id"},
-            { data: "area_id" },
-            { data: "fee" }
-        ]
     });
 
     $('#btnSearch').on('click', function (e) {
         e.preventDefault();
-        console.log("Tim kiem");
-
+        console.log("Tim kiem lai");
         let url = makeUrl();
-
-        console.log(typeof table.ajaxSettings.url);
+        table.ajax.url(url).load();
     })
 });
