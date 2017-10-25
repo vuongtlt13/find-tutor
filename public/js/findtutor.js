@@ -78,6 +78,11 @@ function makeUrl() {
     return res;
 }
 
+function showModal(data) {
+    console.log('Data: ', data);
+
+}
+
 $(document).ready(function () {
     let table = $('#datatable').DataTable({
         processing: true,
@@ -89,19 +94,9 @@ $(document).ready(function () {
                 console.log('Loi r', err);
             },
         },
-        columnDefs :[
-            {
-                "targets": 2,
-                "data" : function ( row, type, val, meta ) {
-                    console.log('Row: ', row);
-                    console.log('Type: ', type);
-                    console.log('Val: ', val);
-                    console.log('Meta: ', meta);
-                    return val === 1 ? "Nam" : "Nữ";
-                }
-            },
-        ],
         columns: [
+            // { data: "id", name: "id", "visible": false},
+            { data: "id", name: "id"},
             { data: "name", name: "name"},
             { data: "age", name: "age"},
             { data: "gender", name: "gender"},
@@ -132,5 +127,10 @@ $(document).ready(function () {
         console.log("Tim kiem lai");
         let url = makeUrl();
         table.ajax.url(url).load();
-    })
+    });
+
+    $('#datatable tbody').on( 'click', 'tr', function () {
+        console.log('click to row with course_id: ', table.row($(this)).data().id);
+        showModal(table.row($(this)).data());
+    } );
 });

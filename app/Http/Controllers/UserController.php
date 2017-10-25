@@ -8,8 +8,8 @@ use App\Student;
 use App\Subject;
 use App\Tutor;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\DB;
-use Sentinel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -165,10 +165,15 @@ class UserController extends Controller
         return redirect(route('manage'));
     }
 
+    /**
+     * searching info about courses
+     * @param Request $request
+     * @return mixed
+     */
     public function search(Request $request)
     {
         $name = $request->input('name') === 'all' ? '' : $request->input('name');
-        $gender = $request->input('gender') === 'all' ? 3 : config('constants.gender' . $request->input('gender'));
+        $gender = $request->input('gender') === 'all' ? 3 : config('constants.gender.' . $request->input('gender'));
         if ($gender == 2) $gender = 3;
         $subject = $request->input('subject') === 'all' ? '' : $request->input('subject');
         $area = $request->input('area') === 'all' ? '' : $request->input('area');
@@ -207,7 +212,7 @@ class UserController extends Controller
             ->leftJoin('users as u', 'c.user_id', '=', 'u.id')
             ->leftJoin('subjects as s', 'c.subject_id', '=', 's.id')
             ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
-            ->select('c.user_id', 'c.subject_id', 'c.area_id', 'u.name as name',
+            ->select('c.id', 'c.user_id', 'c.subject_id', 'c.area_id', 'u.name as name',
                 DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
                 DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'),
                 's.name as subject', 'a.name as area', 'fee')
@@ -215,11 +220,54 @@ class UserController extends Controller
                 ['u.name', 'like', '%' . $name . '%'],
                 ['a.name', 'like', '%' . $area . '%'],
                 ['s.name', 'like', '%' . $subject . '%'],
+                ['c.status', '=', 1],
             ])
             ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
             ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge])
             ->whereBetween('fee', [$minPrice, $maxPrice]);
 
+//        return json_encode($query->get());
+        return Datatables::of($query)->make(true);
+    }
+
+    /**
+     * Tutor search
+     * @param Request $request
+     * @return mixed
+     */
+    public function tutorSearch(Request $request)
+    {
+        $user = Sentinel::getUser();
+        $subject = $request->input('subject') === 'all' ? '' : $request->input('subject');
+        $area = $request->input('area') === 'all' ? '' : $request->input('area');
+
+//        SELECT c.user_id, c.subject_id, c.area_id, u.name as name, FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age, IF(u.gender = 1, "Nam", "Nữ") as gender, s.name as subject, a.name as area, fee
+//        FROM courses as c
+//        LEFT JOIN users as u
+//          ON c.user_id = u.id
+//        LEFT JOIN subjects as s
+//          ON c.subject_id = s.id
+//        LEFT JOIN areas as a
+//          ON c.area_id = a.id
+//        WHERE u.name LIKE '%%'
+//            AND a.name LIKE '%%'
+//            AND s.name LIKE '%%'
+//            AND gender BETWEEN 0 AND 1
+//            AND FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) BETWEEN 0 AND 100
+//            AND fee BETWEEN 0 AND 1000000
+//        ORDER BY c.user_id;
+
+
+        $query = DB::table('courses as c')
+            ->leftJoin('subjects as s', 'c.subject_id', '=', 's.id')
+            ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
+            ->select('c.id, c.user_id', 'c.subject_id', 'c.area_id',
+                     's.name as subject', 'a.name as area', 'fee')
+            ->where([
+                ['user_id', '=', $user->id],
+                ['a.name', 'like', '%' . $area . '%'],
+                ['s.name', 'like', '%' . $subject . '%'],
+            ]);
 //        return json_encode($query->get());
         return Datatables::of($query)->make(true);
     }

@@ -120,6 +120,7 @@
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Tên</th>
                                     <th>Tuổi</th>
                                     <th>Giới tính</th>

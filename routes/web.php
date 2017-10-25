@@ -19,6 +19,7 @@ Route::get('/register', 'MainController@register')->name('register');
 Route::post('/login', 'UserController@login')->name('authentication');
 Route::post('/register', 'UserController@register')->name('registration');
 Route::get('/search', 'UserController@search')->name('search');
+Route::get('/manage/search', 'UserController@tutorSearch')->name('tutor-search');
 
 //Route::get('/complete', 'MainController@completeInfo')->name('complete-info-index');
 //Route::post('/complete', 'UserController@completeInfo')->name('complete-info');

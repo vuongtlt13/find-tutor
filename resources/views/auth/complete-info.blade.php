@@ -67,7 +67,7 @@
                                         <div class="form-group clearfix">
                                             <label class="col-lg-2 control-label" for="phone"> Số điện thoại *</label>
                                             <div class="col-lg-10">
-                                                <input id="phone" name="phone" type="text" class="required form-control">
+                                                <input data-parsley-type="digits" data-parsley-id="44" id="phone" name="phone" type="text" class="required form-control">
                                             </div>
                                         </div>
 
