@@ -7,10 +7,13 @@ use App\Course;
 use App\Student;
 use App\Subject;
 use App\Tutor;
+use App\User;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Mockery\Exception;
+use function PHPSTORM_META\type;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -134,100 +137,23 @@ class UserController extends Controller
     }
 
     /**
-     * create new course
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function createCourse(Request $request)
-    {
-        //dd($request);
-        $subject = $request->input('subject');
-        $area = $request->input('area');
-        $fee = $request->input('fee');
-        $isActive = ($request->input('active') == null) ? 0 : 1;
-
-        $user = Sentinel::getUser();
-        $subject = Subject::where('name', $subject)->first();
-        $area = Area::where('name', $area)->first();
-        $fee = (int)$fee;
-
-
-        if (!($subject == null || $area == null || gettype($fee) != 'integer')) {
-            $course = new Course();
-            $course->subject_id = $subject->id;
-            $course->area_id = $area->id;
-            $course->user_id = $user->id;
-            $course->fee = $fee;
-            $course->status = $isActive;
-
-            $course->save();
-        }
-        return redirect(route('manage'));
-    }
-
-    /**
      * searching info about courses
      * @param Request $request
      * @return mixed
      */
     public function search(Request $request)
     {
-        $name = $request->input('name') === 'all' ? '' : $request->input('name');
-        $gender = $request->input('gender') === 'all' ? 3 : config('constants.gender.' . $request->input('gender'));
-        if ($gender == 2) $gender = 3;
-        $subject = $request->input('subject') === 'all' ? '' : $request->input('subject');
-        $area = $request->input('area') === 'all' ? '' : $request->input('area');
-        $minAge = intval($request->input('minage'));
-        $maxAge = intval($request->input('maxage'));
-        $minPrice = intval($request->input('minprice'));
-        $maxPrice = intval($request->input('maxprice'));
-
-//        echo $name . ' ' . PHP_EOL;
-//        echo $gender . ' ' . PHP_EOL;
-//        echo $subject . ' ' . PHP_EOL;
-//        echo $area . ' ' . PHP_EOL;
-//        echo gettype($minAge) . ' ' . $minAge . PHP_EOL;
-//        echo gettype($maxAge) . ' ' . $maxAge . PHP_EOL;
-//        echo gettype($minPrice) . ' ' . $minPrice . PHP_EOL;
-//        echo gettype($maxPrice) . ' ' . $maxPrice . PHP_EOL;
-
-//        SELECT c.user_id, c.subject_id, c.area_id, u.name as name, FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age, IF(u.gender = 1, "Nam", "Nữ") as gender, s.name as subject, a.name as area, fee
-//        FROM courses as c
-//        LEFT JOIN users as u
-//          ON c.user_id = u.id
-//        LEFT JOIN subjects as s
-//          ON c.subject_id = s.id
-//        LEFT JOIN areas as a
-//          ON c.area_id = a.id
-//        WHERE u.name LIKE '%%'
-//            AND a.name LIKE '%%'
-//            AND s.name LIKE '%%'
-//            AND gender BETWEEN 0 AND 1
-//            AND FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) BETWEEN 0 AND 100
-//            AND fee BETWEEN 0 AND 1000000
-//        ORDER BY c.user_id;
-
-
-        $query = DB::table('courses as c')
-            ->leftJoin('users as u', 'c.user_id', '=', 'u.id')
-            ->leftJoin('subjects as s', 'c.subject_id', '=', 's.id')
-            ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
-            ->select('c.id', 'c.user_id', 'c.subject_id', 'c.area_id', 'u.name as name',
-                DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
-                DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'),
-                's.name as subject', 'a.name as area', 'fee')
-            ->where([
-                ['u.name', 'like', '%' . $name . '%'],
-                ['a.name', 'like', '%' . $area . '%'],
-                ['s.name', 'like', '%' . $subject . '%'],
-                ['c.status', '=', 1],
-            ])
-            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
-            ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge])
-            ->whereBetween('fee', [$minPrice, $maxPrice]);
-
-//        return json_encode($query->get());
-        return Datatables::of($query)->make(true);
+        $type = $request->input('type');
+        switch ($type) {
+            case "admin":
+                return $this->searchAdmin($request);
+                break;
+            case "course":
+                return $this->searchCourse($request);
+                break;
+            default:
+                echo "No Permission";
+        }
     }
 
     /**
@@ -261,8 +187,8 @@ class UserController extends Controller
         $query = DB::table('courses as c')
             ->leftJoin('subjects as s', 'c.subject_id', '=', 's.id')
             ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
-            ->select('c.id, c.user_id', 'c.subject_id', 'c.area_id',
-                     's.name as subject', 'a.name as area', 'fee')
+            ->select('c.id', 'c.user_id', 'c.subject_id', 'c.area_id',
+                     's.name as subject', 'a.name as area', 'c.fee', 'c.status')
             ->where([
                 ['user_id', '=', $user->id],
                 ['a.name', 'like', '%' . $area . '%'],
@@ -270,6 +196,124 @@ class UserController extends Controller
             ]);
 //        return json_encode($query->get());
         return Datatables::of($query)->make(true);
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function getAdminInfo(Request $request)
+    {
+        $id = $request->input('id');
+        $res = DB::table('users as u')
+                ->where('u.id', '=', $id)
+                ->leftJoin('tutors as t', 't.user_id', '=', 'id')
+                ->select('u.name', DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
+                    DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'), 't.job', 't.workplace', 'u.phone', 'u.email')
+                ->first();
+
+        return json_encode($res);
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    private function searchAdmin($request)
+    {
+//        dd($request);
+        $name = $request->name === 'all' ? '' : $request->name;
+        $gender = $request->gender === 'all' ? 3 : config('constants.gender.' . $request->gender);
+        if ($gender == 2) $gender = 3;
+        $minAge = intval($request->minage);
+        $maxAge = intval($request->maxage);
+        $query = DB::table('users as u')
+            ->leftJoin('tutors as t', 't.user_id', '=', 'u.id')
+            ->select('u.id', 'u.name', 't.job', 't.workplace',
+                DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
+                DB::raw('IF(gender = 1, "Nam", "Nữ") as gender'),
+                't.status', 'u.phone', 'u.email')
+            ->where([
+                ['u.name', 'like', '%' . $name . '%'],
+            ])
+            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
+            ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge]);
+//        return json_encode($query->get());
+        return Datatables::of($query)->make(true);
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    private function searchCourse($request)
+    {
+        $name = $request->name === 'all' ? '' : $request->name;
+        $gender = $request->gender === 'all' ? 3 : config('constants.gender.' . $request->gender);
+        if ($gender == 2) $gender = 3;
+        $subject = $request->subject === 'all' ? '' : $request->subject;
+        $area = $request->area === 'all' ? '' : $request->area;
+        $minAge = intval($request->minage);
+        $maxAge = intval($request->maxage);
+        $minPrice = intval($request->minprice);
+        $maxPrice = intval($request->maxprice);
+
+//        SELECT c.user_id, c.subject_id, c.area_id, u.name as name, FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age, IF(u.gender = 1, "Nam", "Nữ") as gender, s.name as subject, a.name as area, fee
+//        FROM courses as c
+//        LEFT JOIN users as u
+//          ON c.user_id = u.id
+//        LEFT JOIN subjects as s
+//          ON c.subject_id = s.id
+//        LEFT JOIN areas as a
+//          ON c.area_id = a.id
+//        WHERE u.name LIKE '%%'
+//            AND a.name LIKE '%%'
+//            AND s.name LIKE '%%'
+//            AND gender BETWEEN 0 AND 1
+//            AND FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) BETWEEN 0 AND 100
+//            AND fee BETWEEN 0 AND 1000000
+//        ORDER BY c.user_id;
+
+
+        $query = DB::table('courses as c')
+            ->leftJoin('users as u', 'c.user_id', '=', 'u.id')
+            ->leftJoin('tutors as t', 't.user_id', '=', 'u.id')
+            ->leftJoin('subjects as s', 'c.subject_id', '=', 's.id')
+            ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
+            ->select('c.id', 'c.user_id', 'c.subject_id', 'c.area_id', 'u.name as name',
+                DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
+                DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'),
+                's.name as subject', 'a.name as area', 'fee')
+            ->where([
+                ['u.name', 'like', '%' . $name . '%'],
+                ['a.name', 'like', '%' . $area . '%'],
+                ['s.name', 'like', '%' . $subject . '%'],
+                ['c.status', '=', 1],
+                ['t.status', '=', 1],
+            ])
+            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
+            ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge])
+            ->whereBetween('fee', [$minPrice, $maxPrice]);
+
+//        return json_encode($query->get());
+        return Datatables::of($query)->make(true);
+    }
+
+    public function changeStatus(Request $request)
+    {
+//        dd($request);
+        $id = $request->input('adminId');
+
+        $user = Sentinel::getUser();
+        if (self::getTypeOfUser($user) == 2) {
+            $tutor = Tutor::find($id);
+            if ($tutor != null) {
+                $tutor->status = 1 - $tutor->status;
+                $tutor->save();
+                return json_encode($tutor);
+            }
+        }
+        echo "Permission denied";
     }
 }
 

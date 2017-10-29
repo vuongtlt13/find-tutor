@@ -70,6 +70,6 @@ class DatabaseSeeder extends Seeder
         TutorController::createTutor('nhokbin99', 'Trịnh Vân Thu', '1984-3-4', 'Dia chi', 0, 1);
         TutorController::createTutor('uoctv192', 'Trần Văn Ước', '1994-1-9', 'Dia chi', 1, 0);
 
-        CourseController::createCourses(200);
+        CourseController::createCourses(2000);
     }
 }

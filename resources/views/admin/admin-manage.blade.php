@@ -12,6 +12,8 @@
     <link href="vendor/light/assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="vendor/light/assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
+    <link href="vendor/light/assets/plugins/switchery/css/switchery.min.css" rel="stylesheet" />
+
     <link href="vendor/light/assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="vendor/light/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
     <style>
@@ -58,31 +60,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <label>Môn học</label>
-                                        <div class="btn-group bootstrap-select">
-                                            <select id="subject" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                                <option>Tất cả</option>
-                                                @foreach($subjects as $subject)
-                                                    <option>{{$subject->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label>Nơi dạy</label>
-                                        <div class="btn-group bootstrap-select">
-                                            <select id="area" class="selectpicker" data-style="btn-white" tabindex="-98">
-                                                <option>Tất cả</option>
-                                                @foreach($areas as $area)
-                                                    <option>{{$area->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row text-center col-sm-12">
                                     <div class="col-sm-3 form-group">
                                         <label for="name">Tuổi</label>
                                         <div class="btn-group bootstrap-select">
@@ -96,32 +73,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-7">
-                                        <label for="name">Học phí (1 buổi)</label>
-                                        <div>
-                                            <div class="form-inline col-sm-6">
-                                                <label class="col-sm-3" style="padding-top: 10px">Từ: </label>
-                                                <div class="col-sm-7">
-                                                    <input type="number" class="form-control" id="minPrice" placeholder="Giá nhỏ nhất" value="0">
-                                                </div>
-                                                <div style="padding-top: 10px">VNĐ</div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="col-sm-3" style="padding-top: 10px">Đến: </label>
-                                                <div class="col-sm-7">
-                                                    <input type="number" class="form-control" id="maxPrice" placeholder="Giá lớn nhất" value="100000">
-                                                </div>
-                                                <div style="padding-top: 10px">VNĐ</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="col-sm-2 form-group">
-                                        <span class="input-group-btn">
+                                        <span class="input-group-btn" style="padding-top: 10px">
                                             <button id="btnSearch" type="button" class="btn waves-effect waves-light btn-default btn-md"><i class="fa fa-search m-r-5"></i> Tìm kiếm</button>
                                         </span>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -137,22 +95,23 @@
                                     <th>Tên</th>
                                     <th>Tuổi</th>
                                     <th>Giới tính</th>
-                                    <th>Môn dạy</th>
-                                    <th>Khu vực</th>
-                                    <th>Học phí(1 buổi)</th>
-                                    <th>Contact</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Email</th>
+                                    <th>Công việc</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {{--@foreach($courses as $course)--}}
-                                    {{--<tr>--}}
-                                        {{--<td>{{$course->user_id}}</td>--}}
-                                        {{--<td>{{$course->user_id}}</td>--}}
-                                        {{--<td>{{$course->user_id}}</td>--}}
-                                        {{--<td>{{$course->subject_id}}</td>--}}
-                                        {{--<td>{{$course->area_id}}</td>--}}
-                                        {{--<td>{{$course->fee}} VNĐ</td>--}}
-                                    {{--</tr>--}}
+                                {{--<tr>--}}
+                                {{--<td>{{$course->user_id}}</td>--}}
+                                {{--<td>{{$course->user_id}}</td>--}}
+                                {{--<td>{{$course->user_id}}</td>--}}
+                                {{--<td>{{$course->subject_id}}</td>--}}
+                                {{--<td>{{$course->area_id}}</td>--}}
+                                {{--<td>{{$course->fee}} VNĐ</td>--}}
+                                {{--</tr>--}}
                                 {{--@endforeach--}}
                                 </tbody>
                             </table>
@@ -178,14 +137,11 @@
                     <img class="img-circle" src="vendor/light/assets/images/users/avatar-6.jpg" alt="">
                     <h3 id="name_info" class="header-title"><b>Bill Bertz</b></h3>
                     <p id="gender_age_info" class="text-muted">Nam - 26 tuổi</p>
-                    <p id="job_info" class="text-muted">Branch manager</p>
-                    <p id="company_info" class="text-dark"><i class="md md-business m-r-10"></i><small>ABC company Pvt Ltd.</small></p>
                 </div>
-                <div class="col-sm-6 pull-right" style="padding-right: 5%;padding-top: 3%;">
-                    <div class="form-group" style="text-align:left;">
-                        <p><b>Môn học: </b><label class="text-muted" id="subject_info">Toán học</label></p>
-                        <p><b>Khu vực: </b><label class="text-muted" id="area_info">Quận Hai Bà Trưng</label></p>
-                        <p><b>Học phí: </b><label class="text-muted" id="fee_info">200000 VNĐ/buổi</label></p>
+                <div class="col-sm-7 pull-left" style="padding-right: 5%;padding-top: 3%;">
+                    <div class="form-group" style="text-align: left">
+                        <p><b>Nghề nghiệp: </b><label class="text-muted" id="job_info">Branch manager</label></p>
+                        <p><b>Nơi làm việc: </b><label class="text-muted" id="company_info">ABC company Pvt Ltd.</label></p>
                         <p><b>Email: </b><label class="text-muted" id="email_info">abc@abc</label></p>
                         <p><b>Số điện thoại: </b><label class="text-muted" id="phone_info">0123456789</label></p>
                     </div>
@@ -222,9 +178,13 @@
     <script src="vendor/light/assets/plugins/select2/js/select2.min.js" type="text/javascript"></script>
     <script src="vendor/light/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 
-    <script src="/js/findtutor.js"></script>
+    <script src="vendor/light/assets/plugins/switchery/js/switchery.min.js"></script>
+
+    <script src="/js/admin-manage.js"></script>
 
     <!-- Modal-Effect -->
     <script src="vendor/light/assets/plugins/custombox/js/custombox.min.js"></script>
     <script src="vendor/light/assets/plugins/custombox/js/legacy.min.js"></script>
+
+    <script src="/js/admin-action.js"></script>
 @endsection

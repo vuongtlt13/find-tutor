@@ -100,7 +100,7 @@ class MigrationCartalystSentinel extends Migration
             $table->string('name')->default("");
             $table->string('email')->unique();
             $table->string('identification')->unique()->nullable();
-            $table->string('phone')->unique()->nullable();
+            $table->string('phone')->unique()->default('');
             $table->date('date_of_birth')->nullable();
             $table->string('address')->nullable();
             $table->boolean('gender')->nullable();

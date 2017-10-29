@@ -32,7 +32,7 @@ function createQuery(params) {
 }
 
 function makeUrl() {
-    let res = "/search?";
+    let res = "/search?type=course&";
     /** GET NAME */
     let name = $('#name').val().trim() === "" ? "all" : $('#name').val().trim();
     // console.log('name : ', name);
@@ -81,6 +81,29 @@ function makeUrl() {
 function showModal(data) {
     console.log('Data: ', data);
 
+    $('#name_info').text(data.name);
+    $('#subject_info').text(data.subject);
+    $('#area_info').text(data.area);
+    $('#fee_info').text(data.fee + " VNĐ/buổi");
+
+    $.ajax({
+        url: '/getinfo?id=' + data.user_id,
+        dataType: 'json',
+        error: function () {
+            console.log("Loi r");
+        },
+        success: function (data) {
+            console.log('admin-info:', data);
+            $('#gender_age_info').text(data.gender + ' - ' + data.age + ' tuổi');
+            $('#job_info').text(data.job);
+            $('#company_info').text(data.workplace);
+
+            $('#email_info').text(data.email);
+            $('#phone_info').text(data.phone);
+
+            $('#btnModal').trigger("click");
+        }
+    });
 }
 
 $(document).ready(function () {
@@ -94,15 +117,31 @@ $(document).ready(function () {
                 console.log('Loi r', err);
             },
         },
+        columnDefs: [
+            {
+                targets: -2,
+                render: function ( data, type, row ) {
+                    return data + ' VNĐ'
+                },
+            },
+            {
+                targets: -1,
+                // data: null,
+                render: function (data, type, row) {
+                    return '<button class="btn btn-icon waves-effect waves-light btn-success"> <i class="fa fa-phone"></i> </button>'
+                }
+            }
+        ],
         columns: [
-            // { data: "id", name: "id", "visible": false},
-            { data: "id", name: "id"},
+            { data: "id", name: "id", "visible": false},
+            // { data: "id", name: "id"},
             { data: "name", name: "name"},
             { data: "age", name: "age"},
             { data: "gender", name: "gender"},
             { data: "subject", name: "subject"},
             { data: "area", name: "area"},
             { data: "fee", name: "fee"},
+            { data: "action", name: "fee"},
         ],
         pageLength: 15,
         searching: false,

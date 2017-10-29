@@ -76,18 +76,27 @@ class MainController extends Controller
     public function manage()
     {
         $user = Sentinel::getUser();
-        $tutor = Tutor::where('user_id', $user->id)->first();
-        if ($tutor == null) {
-            echo "No permission";
-        } else {
-            if ($tutor->status == 0) {
-                echo "No permission, please contact to admin";
-            } else {
-                $areas = Area::all();
-                $subjects = Subject::all();
-                $courses = Course::where('user_id', $user->id)->get();
-                return view('tutor.manage', ['areas' => $areas, 'subjects' => $subjects, 'courses' => $courses]);
-            }
+        $type = self::getTypeOfUser($user);
+        $tutor = Tutor::where('user_id', '=', $user->id)->first();
+        switch ($type) {
+            case 0:
+                echo "You are not a tutor!";
+                break;
+            case 1:
+                if ($tutor->status == 0) {
+                    echo "Your account is not verified! Please contact to admin";
+                } else {
+                    $areas = Area::all();
+                    $subjects = Subject::all();
+                    $courses = Course::where('user_id', $user->id)->get();
+                    return view('tutor.manage', ['areas' => $areas, 'subjects' => $subjects, 'courses' => $courses]);
+                }
+                break;
+            case 2:
+                return view('admin.admin-manage');
+                break;
+            default:
+                echo "No permission";
         }
     }
 }

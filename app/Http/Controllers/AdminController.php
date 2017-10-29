@@ -22,6 +22,7 @@ class AdminController extends Controller
             "username" => $username,
             "email" => $email,
             "password" => $password,
+            "phone" => '111'
         ];
 
         $user = Sentinel::registerAndActivate($credentials);

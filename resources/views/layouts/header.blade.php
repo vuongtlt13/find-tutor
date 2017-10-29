@@ -1,10 +1,3 @@
-/**
- * Created by PhpStorm.
- * User: vuong
- * Date: 02/10/2017
- * Time: 14:36
- */
-
 <!-- Top Bar Start -->
 <div class="topbar">
 

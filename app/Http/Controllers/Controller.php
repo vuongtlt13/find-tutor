@@ -48,12 +48,30 @@ class Controller extends BaseController
     }
 
     /**
+     * Random String
      * @param int $length
      * @return string
      */
     public static function randomString($length = 6) {
         $str = "";
         $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+        $max = count($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $rand = mt_rand(0, $max);
+            $str .= $characters[$rand];
+        }
+        return $str;
+    }
+
+    /**
+     * Random number
+     * @param int $length
+     * @return string
+     */
+    public static function randomNumber($length = 6)
+    {
+        $str = "";
+        $characters = array_merge(range('0','9'));
         $max = count($characters) - 1;
         for ($i = 0; $i < $length; $i++) {
             $rand = mt_rand(0, $max);

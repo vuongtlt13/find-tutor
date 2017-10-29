@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
-
     <link rel="shortcut icon" href="images/edit.png">
 
     <title>Tìm gia sư ôn thi đại học - Tại Hà Nội</title>
@@ -69,5 +68,36 @@
 
 <script src="vendor/light/assets/js/jquery.core.js"></script>
 <script src="vendor/light/assets/js/jquery.app.js"></script>
+
+@if(Controller::getTypeOfUser(Sentinel::getUser()) == 1)
+<script>
+    var userId = {{Sentinel::getUser()->id}};
+    $.ajax({
+        url: '/getinfo?id=' + userId,
+        dataType: 'json',
+        error: function () {
+            console.log("Loi r");
+        },
+        success: function (data) {
+            console.log(data);
+            $('#name_info_left').text(data.name);
+            $('#gender_age_info_left').text(data.gender + ' - ' + data.age + ' tuổi');
+            $('#job_info_left').text(data.job);
+            $('#company_info_left').text(data.workplace);
+
+            $('#email_info_left').text(data.email);
+            $('#phone_info_left').text(data.phone);
+        }
+    });
+</script>
+@endif
+
+<script>
+    let token = $("meta[name='_token']").attr("content");
+    // console.log(token);
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('X-CSRF-Token', token);
+    });
+</script>
 </body>
 </html>
