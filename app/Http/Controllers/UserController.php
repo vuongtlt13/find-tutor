@@ -228,7 +228,7 @@ class UserController extends Controller
         $minAge = intval($request->minage);
         $maxAge = intval($request->maxage);
         $query = DB::table('users as u')
-            ->leftJoin('tutors as t', 't.user_id', '=', 'u.id')
+            ->rightJoin('tutors as t', 't.user_id', '=', 'u.id')
             ->select('u.id', 'u.name', 't.job', 't.workplace',
                 DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
                 DB::raw('IF(gender = 1, "Nam", "Nữ") as gender'),
