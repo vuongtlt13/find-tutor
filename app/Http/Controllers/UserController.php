@@ -295,7 +295,6 @@ class UserController extends Controller
             ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge])
             ->whereBetween('fee', [$minPrice, $maxPrice]);
 
-//        return json_encode($query->get());
         return Datatables::of($query)->make(true);
     }
 

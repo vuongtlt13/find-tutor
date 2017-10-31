@@ -57,8 +57,8 @@ let table = $('#datatable').DataTable({
             data: null,
             render: function ( data, type, row ) {
                 // console.log(row);
-                var inputFalse = '<input class="btnActive" data-size="small" type="checkbox" data-plugin="switchery" data-color="#ed0109" data-secondary-color="#0ab310"/>';
-                var inputTrue = '<input class="btnActive" data-size="small" checked type="checkbox" data-plugin="switchery" data-color="#ed0109" data-secondary-color="#0ab310"/>';
+                var inputTrue = '<input class="btnActive" data-size="small" type="checkbox" data-plugin="switchery" data-color="#0ab310" data-secondary-color="#ed0109"/>';
+                var inputFalse = '<input class="btnActive" data-size="small" checked type="checkbox" data-plugin="switchery" data-color="#0ab310" data-secondary-color="#ed0109"/>';
                 var btnEdit = '<button class="btnEdit btn btn-icon waves-effect waves-light btn-primary btn-xs" data-toggle="modal" data-target="#update-modal"> <i class="fa fa-pencil"></i> </button>';
                 var btnDelete = '<a href="#custom-modal" class="btnDelete btn btn-primary waves-effect waves-light btn-danger btn-xs" data-animation="fadein" data-plugin="custommodal" ' +
                                 'data-overlaySpeed="200" data-overlayColor="#36404a"><i class="fa fa-remove"></i></a>';
