@@ -7,6 +7,19 @@ function createQuery(params) {
     return res;
 }
 
+function formatNumber(data) {
+    // console.log(typeof data, data);
+    let res = "";
+    let arr = data.split("").reverse();
+    for (let i = 0; i < arr.length; i++) {
+        if (i !== 0 && i % 3 === 0) {
+            res += ',';
+        }
+        res += arr[i];
+    }
+    return res.split("").reverse().join("");
+}
+
 function makeUrl() {
     let res = "/manage/search?";
     /** GET SUBJECT */
@@ -40,7 +53,7 @@ let table = $('#datatable').DataTable({
         {
             targets: -3,
             render: function ( data, type, row ) {
-                return data + ' VNĐ'
+                return formatNumber(data) + ' VNĐ'
             },
         },
         {

@@ -20,7 +20,7 @@
                                 <img src="vendor/light/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle">
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:void(0)"><i class="ti-user m-r-10 text-custom"></i> Hồ sơ</a></li>
+                                <li><a href="{{route('profile')}}"><i class="ti-user m-r-10 text-custom"></i> Hồ sơ</a></li>
                                 {{--<li><a href="javascript:void(0)"><i class="ti-settings m-r-10 text-custom"></i> Settings</a></li>--}}
                                 {{--<li><a href="javascript:void(0)"><i class="ti-lock m-r-10 text-custom"></i> Lock screen</a></li>--}}
                                 <li class="divider"></li>

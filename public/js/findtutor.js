@@ -84,7 +84,7 @@ function showModal(data) {
     $('#name_info').text(data.name);
     $('#subject_info').text(data.subject);
     $('#area_info').text(data.area);
-    $('#fee_info').text(data.fee + " VNĐ/buổi");
+    $('#fee_info').text(formatNumber(data.fee) + " VNĐ/buổi");
 
     $.ajax({
         url: '/getinfo?id=' + data.user_id,
@@ -106,6 +106,19 @@ function showModal(data) {
     });
 }
 
+function formatNumber(data) {
+    // console.log(typeof data, data);
+    let res = "";
+    let arr = data.split("").reverse();
+    for (let i = 0; i < arr.length; i++) {
+        if (i !== 0 && i % 3 === 0) {
+            res += ',';
+        }
+        res += arr[i];
+    }
+    return res.split("").reverse().join("");
+}
+
 $(document).ready(function () {
     let table = $('#datatable').DataTable({
         processing: true,
@@ -121,7 +134,8 @@ $(document).ready(function () {
             {
                 targets: -2,
                 render: function ( data, type, row ) {
-                    return data + ' VNĐ'
+                    let res = formatNumber(data);
+                    return res + ' VNĐ'
                 },
             },
             {

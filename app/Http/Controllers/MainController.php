@@ -99,4 +99,28 @@ class MainController extends Controller
                 echo "No permission";
         }
     }
+
+    /**
+     * @return string
+     */
+    public function profile()
+    {
+        $user = Sentinel::getUser();
+
+        if ($user != null) {
+            $userType = self::getTypeOfUser($user);
+            if ($userType == -1) return 'Permission denied';
+            $user->userType = $userType;
+            if ($userType == config('constants.typeUser.admin')) {
+                $user->moreInfo = Admin::find($user->id);
+            } else if ($userType == config('constants.typeUser.tutor')) {
+                $user->moreInfo = Tutor::find($user->id);
+            } else {
+                $user->moreInfo = Student::find($user->id);
+            }
+
+            return view('default.profile', ['userInfo' => $user]);
+        }
+        return 'Permission denied';
+    }
 }

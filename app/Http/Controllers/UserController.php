@@ -298,6 +298,10 @@ class UserController extends Controller
         return Datatables::of($query)->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return string
+     */
     public function changeStatus(Request $request)
     {
 //        dd($request);
@@ -313,6 +317,31 @@ class UserController extends Controller
             }
         }
         echo "Permission denied";
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function updateProfile(Request $request)
+    {
+//        dd($request);
+        $user = Sentinel::getUser();
+        $user_id = $request->input('user_id');
+        if ($user->id != $user_id) return 'Permission denied';
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $pass = $request->input('password');
+
+        $user->name = $name;
+        $user->email = $email;
+        $user->phone = $phone;
+        if (!($pass == null || $pass == '')) $user->password = bcrypt($pass);
+        $user->save();
+
+        return redirect(route('profile'));
     }
 }
 

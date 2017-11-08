@@ -36,10 +36,10 @@ Route::middleware(['auth.sentinel'])->group(function () {
     Route::post('/manage/delete', 'CourseController@deleteCourse')->name('delete-course');
     Route::post('/manage/changestatus', 'CourseController@changeStatus')->name("change-status");
 
+    Route::get('/profile', 'MainController@profile')->name('profile');
+    Route::post('/profile/update', 'UserController@updateProfile')->name('update-profile');
+
     Route::post('/admin-manage/changestatus', 'UserController@changeStatus')->name("change-status-admin");
 
     Route::get('/logout', 'UserController@logout')->name('logout');
-    Route::get('/profile', 'UserController@profile')->name('profile');
-
-
 });
