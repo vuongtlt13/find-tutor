@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use App\Area;
 use App\Course;
+use App\Student;
 use App\Subject;
 use App\Tutor;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;

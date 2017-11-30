@@ -10,6 +10,7 @@ function createQuery(params) {
 function formatNumber(data) {
     // console.log(typeof data, data);
     let res = "";
+    data = String(data);
     let arr = data.split("").reverse();
     for (let i = 0; i < arr.length; i++) {
         if (i !== 0 && i % 3 === 0) {

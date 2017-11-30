@@ -68,6 +68,11 @@ class UserController extends Controller
             "email" => $email,
         ];
 
+        $user = User::where('email', $email)->first();
+        if ($user != null) {
+            echo "Email is used!";
+            return;
+        }
         $user = Sentinel::registerAndActivate($credentials);
 
         $user->permissions = [
@@ -209,7 +214,7 @@ class UserController extends Controller
                 ->where('u.id', '=', $id)
                 ->leftJoin('tutors as t', 't.user_id', '=', 'id')
                 ->select('u.name', DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
-                    DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'), 't.job', 't.workplace', 'u.phone', 'u.email')
+                    DB::raw('IF(u.gender = 0, "Nam", IF(u.gender = 1, "Nữ", "Khác")) as gender'), 't.job', 't.workplace', 'u.phone', 'u.email')
                 ->first();
 
         return json_encode($res);
@@ -231,12 +236,12 @@ class UserController extends Controller
             ->rightJoin('tutors as t', 't.user_id', '=', 'u.id')
             ->select('u.id', 'u.name', 't.job', 't.workplace',
                 DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
-                DB::raw('IF(gender = 1, "Nam", "Nữ") as gender'),
+                DB::raw('IF(u.gender = 0, "Nam", IF(u.gender = 1, "Nữ", "Khác")) as gender'),
                 't.status', 'u.phone', 'u.email')
             ->where([
                 ['u.name', 'like', '%' . $name . '%'],
             ])
-            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
+            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 2 : $gender])
             ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge]);
 //        return json_encode($query->get());
         return Datatables::of($query)->make(true);
@@ -250,14 +255,14 @@ class UserController extends Controller
     {
         $name = $request->name === 'all' ? '' : $request->name;
         $gender = $request->gender === 'all' ? 3 : config('constants.gender.' . $request->gender);
-        if ($gender == 2) $gender = 3;
+//        if ($gender == 2) $gender = 3;
         $subject = $request->subject === 'all' ? '' : $request->subject;
         $area = $request->area === 'all' ? '' : $request->area;
         $minAge = intval($request->minage);
         $maxAge = intval($request->maxage);
         $minPrice = intval($request->minprice);
         $maxPrice = intval($request->maxprice);
-
+//        dd($name, $gender);
 //        SELECT c.user_id, c.subject_id, c.area_id, u.name as name, FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age, IF(u.gender = 1, "Nam", "Nữ") as gender, s.name as subject, a.name as area, fee
 //        FROM courses as c
 //        LEFT JOIN users as u
@@ -282,7 +287,7 @@ class UserController extends Controller
             ->leftJoin('areas as a', 'c.area_id', '=', 'a.id')
             ->select('c.id', 'c.user_id', 'c.subject_id', 'c.area_id', 'u.name as name',
                 DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365) as age'),
-                DB::raw('IF(u.gender = 1, "Nam", "Nữ") as gender'),
+                DB::raw('IF(u.gender = 0, "Nam", IF(u.gender = 1, "Nữ", "Khác")) as gender'),
                 's.name as subject', 'a.name as area', 'fee')
             ->where([
                 ['u.name', 'like', '%' . $name . '%'],
@@ -291,7 +296,7 @@ class UserController extends Controller
                 ['c.status', '=', 1],
                 ['t.status', '=', 1],
             ])
-            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 1 : $gender])
+            ->whereBetween('gender', [$gender == 3 ? 0 : $gender, $gender == 3 ? 2 : $gender])
             ->whereBetween(DB::raw('FLOOR(DATEDIFF(CURDATE(), u.date_of_birth)/365)'), [$minAge, $maxAge])
             ->whereBetween('fee', [$minPrice, $maxPrice]);
 
