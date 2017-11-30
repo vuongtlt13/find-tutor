@@ -83,7 +83,7 @@ let table = $('#datatable').DataTable({
         }
     ],
     columns: [
-        { data: "id", name: "id", visible:true},
+        { data: "id", name: "id", visible:false},
         { data: "subject", name: "subject"},
         { data: "area", name: "area"},
         { data: "fee", name: "fee"},
